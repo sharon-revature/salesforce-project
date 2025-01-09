@@ -1,9 +1,9 @@
 public with sharing class Calculator {
-    public Double Add(Double a, Double b) {
+    public static Double Add(Double a, Double b) {
         return a + b;
     }
     
-    public Double Multiply(Double a, Double b) {
+    public static Double Multiply(Double a, Double b) {
         // a*b = a+a+a+...+a (b times)
         Double product = 0;
         for (Integer i = 0; i < b; i++){
@@ -12,7 +12,7 @@ public with sharing class Calculator {
         return product;
     }
     
-    public Double Divide(Double a, Double b) {
+    public static Double Divide(Double a, Double b) {
         if (b == 0) {
             return 0;
         }
@@ -32,7 +32,7 @@ public with sharing class Calculator {
         return quotient;
     }
     
-    public Double Mod(Double a, Double b) {
+    public static Double Mod(Double a, Double b) {
         if (b == 0) {
             return 0;
         }
@@ -45,7 +45,7 @@ public with sharing class Calculator {
         return remainder;
     }
     
-    public Double Calculate(String expression) {
+    public static Double Calculate(String expression) {
         // remove white spaces
         expression = expression.replaceAll('\\s+', '');
         // recursively calculate the expression
@@ -53,7 +53,7 @@ public with sharing class Calculator {
     }
     
     // helper function to recursively evaluate the expression
-    public Double Evaluate(String expression) {
+    public static Double Evaluate(String expression) {
         if (!expression.contains('(')) {
             return EvaluateSimple(expression);
         }
@@ -71,7 +71,7 @@ public with sharing class Calculator {
         return Evaluate(newExpression);
     }
     
-    public Double EvaluateSimple(String expression) {
+    public static Double EvaluateSimple(String expression) {
         List<Double> numbers = new List<Double>();
         List<String> operators = new List<String>();
         

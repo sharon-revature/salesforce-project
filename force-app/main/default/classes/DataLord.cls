@@ -58,4 +58,28 @@ public class DataLord {
                                          LIMIT 5];
         return topFive;
     }
+    
+    //SOSL
+    // return all Contacts And Leads named Tom
+    public static List<List<SObject>> searchName(String name) {
+        List<List<SObject>> result = [FIND 'Tom' IN NAME FIELDS
+            RETURNING Contact(Name), Lead(Name)];
+        return result;
+    }
+    
+    //return Accounts with 'a' and 'o' in one of their fields
+    public static List<List<SObject>> searchAccount() {
+        List<List<SObject>> result = [FIND 'a* AND o*'
+            RETURNING Account(Name), Contact(Name)];
+        return result;
+    }
+    
+    // return an Account or Contact or Lead Name that has a phone number ends in 1000 in any field
+    public static List<List<SObject>> searchPhone() {
+        List<List<SObject>> result = [FIND '*1000'
+            IN PHONE FIELDS
+            RETURNING Account(Name), Contact(Name), Lead(Name)];
+        return result;
+    }
+    
 }
