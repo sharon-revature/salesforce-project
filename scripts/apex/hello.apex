@@ -5,19 +5,23 @@
 // You can also execute the entire file by running the command:
 //     SFDX: Execute Anonymous Apex with Editor Contents
 
-/*string tempvar = 'Enter_your_name_here';
+string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
-System.debug(Calculator.Add (2,3));
-System.debug(Calculator.Multiply (2,3));
-System.debug(Calculator.Divide(6,3));
-System.debug(Calculator.Mod(7,3));
-System.debug(Calculator.Calculate(7+3/10 * 5));
-System.debug(DataLord.NumAccounts());
-System.debug(DataLord.NumHot());
-System.debug(DataLord.NumComplex());
-System.debug(DataLord.BigFive());
-System.debug(DataLord.LastBigOpportunity());
-System.debug(DataLord.MajorPlayers());
-System.debug(DataLord.MostPopularAccount());
-System.debug(DataLord.TopLeadSources());*/
+
+// Call Calculator Methods
+System.debug('Addition: ' + Calculator.Add(2, 3));
+System.debug('Multiplication: ' + Calculator.Multiply(2, 3));
+System.debug('Division: ' + Calculator.Divide(6, 3));
+System.debug('Modulus: ' + Calculator.Mod(7, 3));
+System.debug('Calculate Expression: ' + Calculator.Calculate('1 + 2 * 3'));
+
+/* Call DataLord Methods
+System.debug('Number of Accounts: ' + DataLord.NumAccounts());
+System.debug('Number of Hot Accounts: ' + DataLord.NumHot());
+System.debug('Number of Complex Accounts: ' + DataLord.NumComplex());
+System.debug('Top 5 Accounts by Revenue: ' + DataLord.BigFive());
+System.debug('Last Big Opportunity: ' + DataLord.LastBigOpportunity());
+System.debug('Major Players: ' + DataLord.MajorPlayers());
+System.debug('Most Popular Account: ' + DataLord.MostPopularAccount());
+/*

@@ -48,24 +48,30 @@ public class DataLord {
         return popularAccount;
     }
     
-    // return top 5 Lead Sources most likely to close and how likely - ignore case with blank LS
-    public static List<AggregateResult> TopLeadSources() {
-        List<AggregateResult> topFive = [SELECT LeadSource, COUNT(Name)
-                                         FROM Lead
-                                         WHERE LeadSource != 'Closed - No Action'
-                                         GROUP BY LeadSource
-                                         ORDER BY COUNT(LeadSource) DESC
-                                         LIMIT 5];
+    // return top 5 Lead Sources most likely to close - ignore case with blank Lead Source
+    // how likely? need Einstein rating so ima skip
+    public static List<AggregateResult> TopLeadSourcesClosedWon() {
+        List<AggregateResult> topFive = [
+            SELECT LeadSource, COUNT(Id)
+            FROM Opportunity
+            WHERE StageName = 'Closed Won' AND LeadSource != NULL
+            GROUP BY LeadSource
+            ORDER BY COUNT(Id) DESC
+            LIMIT 5
+        ];
         return topFive;
     }
     
-    //SOSL
-    // return all Contacts And Leads named Tom
-    public static List<List<SObject>> searchName(String name) {
-        List<List<SObject>> result = [FIND 'Tom' IN NAME FIELDS
+    
+    // SOSL
+    // Return all Contacts and Leads named Tom
+    public static List<List<SObject>> searchName() {
+        List<List<SObject>> result = [FIND 'Tom'
+            IN NAME FIELDS
             RETURNING Contact(Name), Lead(Name)];
         return result;
     }
+    
     
     //return Accounts with 'a' and 'o' in one of their fields
     public static List<List<SObject>> searchAccount() {
@@ -82,4 +88,73 @@ public class DataLord {
         return result;
     }
     
+    //DML
+    // create and insert 200 uniquely named Contacts into the database
+    public static void SpawnContacts() {
+        List<Contact> contacts = new List<Contact>();
+        for (Integer i = 0; i <= 200; i++) {
+            Contact con = new Contact(LastName = 'LastName ' + i);
+            contacts.add(con);
+        }
+        insert contacts;
+    }
+    
+    // create and insert 3 uniquely Accounts into the database
+    public static void CreateHomes() {
+        List<Account> homes = new List<Account>();
+        for (Integer i = 0; i < 3; i++) {
+            Account home = new Account(Name = 'Name ' + i);
+        }
+        insert homes;
+    }
+    
+    // delete 50 most recent Contacts in the database
+    public static void Relocate() {
+        List<Contact> recentContacts = [SELECT Id FROM Contact ORDER BY CreatedDate LIMIT 50];
+        delete recentContacts;
+    }
+    
+    //Relates all Contacts (from SpawnContacts) to the 3 Accounts (from CreateHomes) randomly
+    public static void AssignHomes() {
+        List<Account> newHomes = [SELECT Id FROM Account ORDER BY CreatedDate LIMIT 3];
+        List<Contact> newContacts = [SELECT Id FROM Contact ORDER BY CreatedDate LIMIT 50];
+        if (newHomes.isEmpty() || newContacts.isEmpty()) {
+            System.debug('No contact or account found to assign.');
+            return;
+        }
+        
+        for (Integer i = 0; i < newContacts.size(); i++) {
+            Integer homeIdx = Integer.valueOf(Math.random() * newHomes.size());
+            newContacts[i].AccountId = newHomes[homeIdx].Id;
+        }
+        update newContacts;
+    }
+    
+    // set a savepoint, call the methods from DML challeneges, collect statistics, then roll back to the savepoint
+    public static void Play() {
+        // Save initial state of database
+        Savepoint sp = Database.setSavepoint();
+        
+        // initial counts of Contact and Account records
+        System.debug('Initial Contact Count: ' + [SELECT COUNT() FROM Contact]);
+        System.debug('Initial Account Count: ' + [SELECT COUNT() FROM Account]);
+        
+        // Challenge methods
+        SpawnContacts();
+        CreateHomes();
+        Relocate();
+        AssignHomes();
+        
+        // current counts of Contact and Account records
+        System.debug('Current Contact Count: ' + [SELECT COUNT() FROM Contact]);
+        System.debug('Current Account Count: ' + [SELECT COUNT() FROM Account]);
+        // number of related contacts for each account
+        List<Account> accounts = [SELECT Id, (SELECT Id FROM Contacts) FROM Account ORDER BY CreatedDate LIMIT 3];
+        for (Account acc : accounts) {
+            System.debug('Related contacts: ' + acc.Contacts.size());
+        }
+        
+        // Rollback to initial state
+        Database.rollback(sp);
+    }
 }
