@@ -8,3 +8,15 @@
 string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
+//System.debug(Calculator.Add (2,3));
+//System.debug(Calculator.Multiply (2,3));
+//System.debug(Calculator.Divide(6,3));
+//System.debug(Calculator.Mod(7,3));
+System.debug(DataLord.NumAccounts());
+System.debug(DataLord.NumHot());
+System.debug(DataLord.NumComplex());
+System.debug(DataLord.BigFive());
+System.debug(DataLord.LastBigOpportunity());
+System.debug(DataLord.MajorPlayers());
+System.debug(DataLord.MostPopularAccount());
+System.debug(DataLord.TopLeadSources());
