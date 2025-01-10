@@ -9,7 +9,7 @@ string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
 
-// Call Calculator Methods
+/* Call Calculator Methods
 System.debug('Addition: ' + Calculator.Add(2, 3));
 System.debug('Multiplication: ' + Calculator.Multiply(2, 3));
 System.debug('Division: ' + Calculator.Divide(6, 3));
@@ -22,8 +22,8 @@ System.debug('Calculate Expression: ' + Calculator.Calculate('(10.5 * 2 - 10) *0
 System.debug('Calculate Expression: ' + Calculator.Calculate('+'));
 System.debug('Calculate Expression: ' + Calculator.Calculate('122 .223 .5465'));
 System.debug('Calculate Expression: ' + Calculator.Calculate('asdf'));
-System.debug('Calculate Expression: ' + Calculator.Calculate(' '));
-
+System.debug('Calculate Expression: ' + Calculator.Calculate(' '));*/
+    
 
 /* Call DataLord Methods
 System.debug('Number of Accounts: ' + DataLord.NumAccounts());
@@ -34,3 +34,5 @@ System.debug('Last Big Opportunity: ' + DataLord.LastBigOpportunity());
 System.debug('Major Players: ' + DataLord.MajorPlayers());
 System.debug('Most Popular Account: ' + DataLord.MostPopularAccount());
  */
+
+DataLord.Play();

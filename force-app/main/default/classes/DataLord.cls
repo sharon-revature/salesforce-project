@@ -92,8 +92,8 @@ public class DataLord {
     // create and insert 200 uniquely named Contacts into the database
     public static void SpawnContacts() {
         List<Contact> contacts = new List<Contact>();
-        for (Integer i = 0; i <= 200; i++) {
-            Contact con = new Contact(LastName = 'LastName ' + i);
+        for (Integer i = 0; i < 200; i++) {
+            Contact con = new Contact(LastName = 'LastName', FirstName = 'First Name' + i);
             contacts.add(con);
         }
         insert contacts;
@@ -103,7 +103,8 @@ public class DataLord {
     public static void CreateHomes() {
         List<Account> homes = new List<Account>();
         for (Integer i = 0; i < 3; i++) {
-            Account home = new Account(Name = 'Name ' + i);
+            Account home = new Account(Name = 'HomeAcc ' + i);
+            homes.add(home);
         }
         insert homes;
     }
@@ -116,15 +117,15 @@ public class DataLord {
     
     //Relates all Contacts (from SpawnContacts) to the 3 Accounts (from CreateHomes) randomly
     public static void AssignHomes() {
-        List<Account> newHomes = [SELECT Id FROM Account ORDER BY CreatedDate LIMIT 3];
-        List<Contact> newContacts = [SELECT Id FROM Contact ORDER BY CreatedDate LIMIT 50];
+        List<Account> newHomes = [SELECT Id FROM Account WHERE Name LIKE 'HomeAcc%' ORDER BY CreatedDate LIMIT 3];
+        List<Contact> newContacts = [SELECT Id FROM Contact WHERE LastName LIKE 'LastName%' AND AccountId = NULL ORDER BY CreatedDate LIMIT 150];
         if (newHomes.isEmpty() || newContacts.isEmpty()) {
             System.debug('No contact or account found to assign.');
             return;
         }
         
         for (Integer i = 0; i < newContacts.size(); i++) {
-            Integer homeIdx = Integer.valueOf(Math.random() * newHomes.size());
+            Integer homeIdx = Math.round(Math.random() * (newHomes.size() - 1));
             newContacts[i].AccountId = newHomes[homeIdx].Id;
         }
         update newContacts;
