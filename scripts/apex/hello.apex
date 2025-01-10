@@ -15,6 +15,15 @@ System.debug('Multiplication: ' + Calculator.Multiply(2, 3));
 System.debug('Division: ' + Calculator.Divide(6, 3));
 System.debug('Modulus: ' + Calculator.Mod(7, 3));
 System.debug('Calculate Expression: ' + Calculator.Calculate('1 + 2 * 3'));
+System.debug('Calculate Expression: ' + Calculator.Calculate('2 * 2 + 3'));
+System.debug('Calculate Expression: ' + Calculator.Calculate('(1 + 2) * 3'));
+System.debug('Calculate Expression: ' + Calculator.Calculate('((3 * (4 + 2) - 8) + 10) / 2 '));
+System.debug('Calculate Expression: ' + Calculator.Calculate('(10.5 * 2 - 10) *0.5 '));
+System.debug('Calculate Expression: ' + Calculator.Calculate('+'));
+System.debug('Calculate Expression: ' + Calculator.Calculate('122 .223 .5465'));
+System.debug('Calculate Expression: ' + Calculator.Calculate('asdf'));
+System.debug('Calculate Expression: ' + Calculator.Calculate(' '));
+
 
 /* Call DataLord Methods
 System.debug('Number of Accounts: ' + DataLord.NumAccounts());
@@ -24,4 +33,4 @@ System.debug('Top 5 Accounts by Revenue: ' + DataLord.BigFive());
 System.debug('Last Big Opportunity: ' + DataLord.LastBigOpportunity());
 System.debug('Major Players: ' + DataLord.MajorPlayers());
 System.debug('Most Popular Account: ' + DataLord.MostPopularAccount());
-/*
+ */

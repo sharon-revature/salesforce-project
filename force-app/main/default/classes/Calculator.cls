@@ -1,18 +1,18 @@
 public with sharing class Calculator {
-    public static Double Add(Double a, Double b) {
+    public static Integer Add(Integer a, Integer b) {
         return a + b;
     }
     
-    public static Double Multiply(Double a, Double b) {
+    public static Integer Multiply(Integer a, Integer b) {
         // a*b = a+a+a+...+a (b times)
-        Double product = 0;
+        Integer product = 0;
         for (Integer i = 0; i < b; i++){
             product = Add(product, a);
         }
         return product;
     }
     
-    public static Double Divide(Double a, Double b) {
+    public static Integer Divide(Integer a, Integer b) {
         if (b == 0) {
             return 0;
         }
@@ -23,8 +23,8 @@ public with sharing class Calculator {
         // a/b = a - b - b - b - ... until a < b
         // count how many times we can subtract b from a
         // use remainder to keep track of the remaining value
-        Double quotient = 0;
-        Double remainder = a;
+        Integer quotient = 0;
+        Integer remainder = a;
         while (remainder >= b){
             remainder = Add(remainder, -b);
             quotient++;
@@ -32,13 +32,13 @@ public with sharing class Calculator {
         return quotient;
     }
     
-    public static Double Mod(Double a, Double b) {
+    public static Integer Mod(Integer a, Integer b) {
         if (b == 0) {
             return 0;
         }
         
         // remainder = a - b - b - b - ... until remainder < b
-        Double remainder = a;
+        Integer remainder = a;
         while (remainder >= b) {
             remainder = Add(remainder, -b);
         }
@@ -62,6 +62,9 @@ public with sharing class Calculator {
         Integer startIdx = expression.lastIndexOf('(');
         // find the first closing parentheses - aka the corresponding closing parentheses for the last opening parentheses
         Integer endIdx = expression.indexOf(')', startIdx);
+        if (endIdx == -1) {
+            throw new IllegalArgumentException('Mismatched parentheses in expression: ' + expression);
+        }
         // use substring to get the expression inside the parentheses (startIndex + 1 exclude opening parentheses)
         String innerExpression = expression.substring(startIdx + 1, endIdx);
         // evaluate the inner expression
@@ -82,24 +85,33 @@ public with sharing class Calculator {
             // if c is a digit or a decimal point, add it to the number
             if (c.isNumeric() || c == '.') {
                 num += c;
-            } else {
-                // if c not number and num is not empty, add it to the list of numbers then reset num
-                if (!String.isBlank(num)) {
-                    numbers.add(Double.valueOf(num));
-                    num = '';
-                }
-                // if c is an operator, add the number to the list of numbers
-                if (c == '+' || c == '-' || c == '*' || c == '/') {
-                    operators.add(c);
-                }
             }
-            // add the last number to the list of numbers if num is not empty
-            if (!String.isBlank(num)) {
+            // c is a math operator
+            else if (c == '+' || c == '-' || c == '*' || c == '/') {
+                // if there's no number before the operator, throw an exception
+                if (String.isBlank(num)) {
+                    throw new IllegalArgumentException('Missing number before operator: ' + c);
+                }
                 numbers.add(Double.valueOf(num));
+                operators.add(c);
+                num = '';
             }
+            // else c is not a math operator
+            else {
+                throw new IllegalArgumentException('Invalid symbol found: ' + c);
+            }
+        }
+        // add the last number to the list of numbers if num is not empty
+        if (!String.isBlank(num)) {
+            numbers.add(Double.valueOf(num));
+        }
+        // if there's no operator
+        else if (operators.size() == 0) {
+            throw new IllegalArgumentException('No operators found in the expression.');
         }
         
         // apply the operations in order of precedence */ -> +-
+        // loop for all * and / first
         for (Integer i = 0; i < operators.size(); i++) {
             String operator = operators[i];
             if (operator == '*' || operator == '/') {
@@ -109,9 +121,9 @@ public with sharing class Calculator {
                 // apply the operation
                 Double result = 0;
                 if (operator == '*') {
-                    result = Multiply(num1, num2);
+                    result = num1 * num2;
                 } else {
-                    result = Divide(num1, num2);
+                    result = num1 / num2;
                 }
                 // replace the two numbers with the result and remove the operator
                 numbers[i] = result;
@@ -120,6 +132,10 @@ public with sharing class Calculator {
                 // to account for the removed operator
                 i--;
             }
+        }
+        // loop for + and -
+        for (Integer i = 0; i < operators.size(); i++) {
+            String operator = operators[i];
             if (operator == '+' || operator == '-') {
                 // get the two numbers to apply the operation
                 Double num1 = numbers[i];
@@ -127,9 +143,9 @@ public with sharing class Calculator {
                 // apply the operation
                 Double result = 0;
                 if (operator == '+') {
-                    result = Add(num1, num2);
+                    result = num1 + num2;
                 } else {
-                    result = Add(num1, -num2);
+                    result = num1 - num2;
                 }
                 // replace the two numbers with the result and remove the operator
                 numbers[i] = result;
