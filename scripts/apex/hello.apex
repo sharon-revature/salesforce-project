@@ -35,4 +35,8 @@ System.debug('Major Players: ' + DataLord.MajorPlayers());
 System.debug('Most Popular Account: ' + DataLord.MostPopularAccount());
  */
 
-DataLord.Play();
+//DataLord.Play();
+
+// PlaygroundSetup test
+System.debug('Number of accounts: ' + PlaygroundSetup.createAccounts(4).size());
+System.debug(PlaygroundSetup.SetUp(4));
