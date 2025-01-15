@@ -4,7 +4,7 @@ trigger SetDefaultEmail on Contact (before insert) {
         // check if the Email field is empty
         if (String.isEmpty(con.Email)) {
             // set a default email if Email is not provided
-            con.Email = 'default@email.com';
+            con.Email = con.LastName + '@email.com';
         }
     }
 }
