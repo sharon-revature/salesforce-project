@@ -11,7 +11,7 @@ trigger CreateContactOnAccountInsert on Account (after insert) {
         newContact.AccountId = acc.Id;
         newContact.FirstName = 'Default';
         newContact.LastName = acc.Name;
-        newContact.Email = 'default' + acc.Name + '@email.com';
+        newContact.Email = 'default' + acc.Name + '@mail.com';
         
         // add new Contact to the inserting list
         contactsToInsert.add(newContact);
