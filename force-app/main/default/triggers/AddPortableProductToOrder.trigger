@@ -1,40 +1,38 @@
-trigger AddPortableProductToOrder on Order (before insert) {
-    // define name of the portable product
-    String portableProductName = 'Installation: Portable Product';
+trigger AddPortableProductToOrder on Order (after insert) {
+    // Product to be added
+    String productName = 'Installation: Portable Product';
     
-    // get product ID for the "Installation: Portable Product"
-    Product2 portableProduct = [SELECT Id FROM Product2 WHERE Name = :portableProductName LIMIT 1];
+    // get the PricebookEntry (id and unitprice) for the product in the standard pricebook
+    Pricebook2 standardPricebook = [SELECT Id FROM Pricebook2 WHERE IsStandard = true LIMIT 1];
+    PricebookEntry portableProductEntry = [SELECT Id, UnitPrice FROM PricebookEntry WHERE Product2.Name = :productName AND Pricebook2Id = :standardPricebook.Id LIMIT 1];
     
-    // list for OrderItems that need to be added
-    List<OrderItem> newOrderItems = new List<OrderItem>();
+    List<OrderItem> orderItemsToInsert = new List<OrderItem>();
     
-    // iterate through new Orders being created
-    for (Order ord : Trigger.new) {
-        // query for existing OrderItems associated with this Order
-        List<OrderItem> existingOrderItems = [SELECT Id, Product2Id FROM OrderItem WHERE OrderId = :ord.Id];
-        
-        // check if "Installation: Portable Product" is already on the Order
+    // loop through each new Order
+    for (Order newOrder : Trigger.new) {
+        // check if newOrder already has the product
         Boolean hasPortableProduct = false;
-        for (OrderItem orderItem : existingOrderItems) {
-            if (orderItem.Product2Id == portableProduct.Id) {
+        // for each item/product for each newOrder
+        for (OrderItem item : [SELECT Id FROM OrderItem WHERE OrderId = :newOrder.Id]) {
+            if (item.PricebookEntryId == portableProductEntry.Id) {
                 hasPortableProduct = true;
                 break;
             }
         }
         
-        // add the Product if it's not in the Order
+        // add it to the list if it's not there
         if (!hasPortableProduct) {
-            OrderItem newItem = new OrderItem(
-                OrderId = ord.Id,
-            Product2Id = portableProduct.Id,
-            Quantity = 1
-                );
-            newOrderItems.add(newItem);
+            OrderItem newOrderItem = new OrderItem();
+            newOrderItem.OrderId = newOrder.Id;
+            newOrderItem.PricebookEntryId = portableProductEntry.Id;
+            newOrderItem.Quantity = 1;
+            newOrderItem.UnitPrice = portableProductEntry.UnitPrice;
+            orderItemsToInsert.add(newOrderItem);
         }
     }
     
-    // insert new OrderItems to add the product to Orders
-    if (!newOrderItems.isEmpty()) {
-        insert newOrderItems;
+    // insert the new OrderItems if any
+    if (!orderItemsToInsert.isEmpty()) {
+        insert orderItemsToInsert;
     }
 }

@@ -1,5 +1,5 @@
 trigger PreventDuplicatePhone on Contact (before insert, before update) {
-    // set to hold unique phone numbers being inserted or updated
+    // set for unique phone numbers being inserted or updated
     Set<String> phoneNumbers = new Set<String>();
     
     // list for Contacts with duplicate phone numbers
@@ -12,7 +12,7 @@ trigger PreventDuplicatePhone on Contact (before insert, before update) {
         }
     }
     
-    // query database to check for existing contacts with the same phone numbers
+    // query for existing contacts with the same phone numbers
     List<Contact> existingContacts = [SELECT Id, Phone FROM Contact WHERE Phone IN :phoneNumbers];
     
     // iterate through the existing contacts to check for duplicates
