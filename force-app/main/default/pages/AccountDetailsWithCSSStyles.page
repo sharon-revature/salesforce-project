@@ -1,0 +1,10 @@
+<apex:page standardController="Account" standardStylesheets="false" showHeader="false">
+    <apex:stylesheet value="{!$Resource.styles}" />
+    <apex:pageBlock title="Account Details" id="pageBlock">
+        <apex:pageBlockSection title="Account Information" columns="1">
+            <apex:outputField value="{!account.Name}" label="Account Name" />
+            <apex:outputField value="{!account.Industry}" label="Industry" />
+            <apex:outputField value="{!account.Phone}" label="Phone" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,19 @@
+<apex:page controller="AccountGreetingMsgController">
+    <apex:pageBlock title="Account Details">
+        <apex:form>
+            <apex:pageBlockSection title="Account Information" columns="1">
+                <apex:outputField value="{!account.Name}" label="Account Name" />
+                <apex:outputField value="{!account.Industry}" label="Industry" />
+                <apex:outputField value="{!account.Phone}" label="Phone" />
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection>
+                <apex:commandButton value="Show Greeting" action="{!showGreeting}" rerender="greetingSection" />
+            </apex:pageBlockSection>
+
+            <apex:outputPanel id="greetingSection" rendered="{!NOT(ISBLANK(greetingMessage))}">
+                <h2>{!greetingMessage}</h2>
+            </apex:outputPanel>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

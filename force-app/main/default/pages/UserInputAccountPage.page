@@ -1,0 +1,22 @@
+<apex:page controller="AccountSearchController">
+    <apex:form>
+        <apex:pageBlock title="Search Account">
+            <apex:pageBlockSection columns="1">
+                <apex:inputText value="{!searchKey}" label="Enter Account Name" />
+                <apex:commandButton value="Search" action="{!searchAccount}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Account Details" rendered="{!hasResults}">
+            <apex:pageBlockSection columns="1">
+                <apex:outputField value="{!account.Name}" label="Account Name" />
+                <apex:outputField value="{!account.Industry}" label="Industry" />
+                <apex:outputField value="{!account.Phone}" label="Phone" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:outputPanel rendered="{!hasNoResults}">
+            <p>No account found with the provided name.</p>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

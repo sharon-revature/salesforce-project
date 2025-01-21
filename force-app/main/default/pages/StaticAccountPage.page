@@ -1,0 +1,9 @@
+<apex:page controller="StaticAccountController">
+    <apex:pageBlock title="Static Account Details">
+        <apex:pageBlockSection title="Account Information" columns="1">
+            <apex:outputField value="{!account.Name}" label="Account Name" />
+            <apex:outputField value="{!account.Industry}" label="Industry" />
+            <apex:outputField value="{!account.Phone}" label="Phone" />
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>
