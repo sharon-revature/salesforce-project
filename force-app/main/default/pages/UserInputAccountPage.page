@@ -13,6 +13,14 @@
                 <apex:outputField value="{!account.Industry}" label="Industry" />
                 <apex:outputField value="{!account.Phone}" label="Phone" />
             </apex:pageBlockSection>
+
+            <!-- Display related Contacts -->
+            <apex:pageBlockSection title="Related Contacts" columns="1" rendered="{!NOT(ISNULL(account.Contacts))}">
+                <apex:repeat value="{!account.Contacts}" var="contact">
+                    <apex:outputText value="{!contact.Name}" />
+                    <br />
+                </apex:repeat>
+            </apex:pageBlockSection>
         </apex:pageBlock>
 
         <apex:outputPanel rendered="{!hasNoResults}">

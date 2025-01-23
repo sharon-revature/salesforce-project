@@ -11,7 +11,7 @@ public class AccountSearchController {
     }
     
     public void searchAccount() {
-        List<Account> accounts = [SELECT Name, Industry, Phone FROM Account WHERE Name = :searchKey LIMIT 1];
+        List<Account> accounts = [SELECT Name, Industry, Phone, (SELECT Name FROM Contacts) FROM Account WHERE Name = :searchKey LIMIT 1];
         
         if (!accounts.isEmpty()) {
             account = accounts[0];

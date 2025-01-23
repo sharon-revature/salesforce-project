@@ -1,0 +1,19 @@
+<apex:page controller="AllAccountsWithContactsController">
+    <apex:pageBlock title="All Accounts with Related Contacts">
+        <apex:pageBlockTable value="{!accounts}" var="a">
+            <apex:column headerValue="Account Name">
+                <apex:outputText value="{!a.Name}" />
+            </apex:column>
+            <apex:column headerValue="Industry">
+                <apex:outputText value="{!a.Industry}" />
+            </apex:column>
+            <apex:column headerValue="Phone">
+                <apex:outputText value="{!a.Phone}" />
+            </apex:column>
+            <apex:column headerValue="Related Contacts">
+                <!-- Not working: Trying to call the getContactsAsString method of the controller instance -->
+                <apex:outputText value="{!getContactsAsString(a)}" />
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
