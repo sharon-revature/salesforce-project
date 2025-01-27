@@ -1,30 +1,21 @@
 <apex:page controller="AccountSearchController">
     <apex:form>
+
         <apex:pageBlock title="Search Account">
             <apex:pageBlockSection columns="1">
                 <apex:inputText value="{!searchKey}" label="Enter Account Name" />
-                <apex:commandButton value="Search" action="{!searchAccount}" />
+                <apex:commandButton value="Search" action="{!searchAccount}" reRender="dynamicAccountBlock" />
             </apex:pageBlockSection>
         </apex:pageBlock>
 
-        <apex:pageBlock title="Account Details" rendered="{!hasResults}">
-            <apex:pageBlockSection columns="1">
-                <apex:outputField value="{!account.Name}" label="Account Name" />
-                <apex:outputField value="{!account.Industry}" label="Industry" />
-                <apex:outputField value="{!account.Phone}" label="Phone" />
-            </apex:pageBlockSection>
+        <apex:pageBlock id="dynamicAccountBlock" title="Account Details">
+            <apex:outputPanel rendered="{!hasResults}">
+                <apex:dynamicComponent componentValue="{!dynamicAccountComponent}" />
+            </apex:outputPanel>
 
-            <!-- Display related Contacts -->
-            <apex:pageBlockSection title="Related Contacts" columns="1" rendered="{!NOT(ISNULL(account.Contacts))}">
-                <apex:repeat value="{!account.Contacts}" var="contact">
-                    <apex:outputText value="{!contact.Name}" />
-                    <br />
-                </apex:repeat>
-            </apex:pageBlockSection>
+            <apex:outputPanel rendered="{!hasNoResults}">
+                <p>No account found with the provided name.</p>
+            </apex:outputPanel>
         </apex:pageBlock>
-
-        <apex:outputPanel rendered="{!hasNoResults}">
-            <p>No account found with the provided name.</p>
-        </apex:outputPanel>
     </apex:form>
 </apex:page>

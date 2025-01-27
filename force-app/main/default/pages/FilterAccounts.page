@@ -1,0 +1,21 @@
+<apex:page controller="FilterAccountsController">
+    <apex:form>
+        <apex:pageBlock title="Filter Accounts">
+            <apex:pageBlockSection>
+                <apex:inputText value="{!filterName}" label="Account Name Filter" />
+                <apex:commandButton value="Apply Filter" action="{!filterAccounts}" rerender="results" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Filtered Accounts and Related Contacts" id="results">
+            <apex:pageBlockTable value="{!filteredAccounts}" var="wrapper">
+                <apex:column headerValue="Account Name">
+                    <apex:outputText value="{!wrapper.account.Name}" />
+                </apex:column>
+                <apex:column headerValue="Related Contacts">
+                    <apex:outputText value="{!wrapper.ContactNames}" />
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
