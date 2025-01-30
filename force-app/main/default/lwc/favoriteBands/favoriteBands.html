@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Favorite Bands">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-size_2-of-3">
+                <div class="slds-grid slds-wrap slds-grid_pull-padded">
+                    <template for:each={bands} for:item="band">
+                        <div key={band.id} class="slds-col slds-size_1-of-3 slds-p-around_medium">
+                            <c-band-card 
+                                band-name={band.name} 
+                                band-image={band.image} 
+                                band-description={band.description}
+                                onlearnmore={handleLearnMore}>
+                            </c-band-card>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="slds-size_1-of-3">
+                <c-band-card-sidebar band-description={selectedDescription}></c-band-card-sidebar>
+            </div>
+        </div>
+    </lightning-card>
+</template>

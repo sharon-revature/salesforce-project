@@ -1,0 +1,18 @@
+
+.band-card {
+    width: 250px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.image-container {
+    height: 200px; 
+    overflow: hidden;  
+}
+
+.custom-band-image{
+    height: 100%;  
+    object-fit: cover; 
+}

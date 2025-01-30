@@ -1,0 +1,22 @@
+.square {
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    border: 1px solid #000;
+}
+
+.square.red {
+    background-color: red;
+}
+
+.square.green {
+    background-color: green;
+}
+
+.square.blue {
+    background-color: blue;
+}
+
+.button-container {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title={headerText}>
+        <lightning-button label={buttonLabel} onclick={toggleInputVisibility} class="slds-m-top_medium"></lightning-button>
+
+        <template if:true={isInputVisible}>
+            <lightning-input label="Enter Text" value={inputValue} onchange={handleInputChange} class="slds-m-top_medium"></lightning-input>
+        </template>
+    </lightning-card>
+</template>

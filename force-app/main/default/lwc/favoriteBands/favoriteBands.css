@@ -1,0 +1,11 @@
+.band-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.sidebar {
+    background-color: #f4f4f4;
+    border-left: 2px solid #ccc;
+    height: 100%;
+}

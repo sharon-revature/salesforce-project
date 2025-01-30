@@ -1,0 +1,8 @@
+<template>
+    <lightning-input label="Enter Item" type="text" class="input" lwc:ref="input"></lightning-input>
+    <lightning-button label="Add" variant="brand" onclick={addItemToList}></lightning-button>
+
+    <template iterator:it={items}>
+        <p key={it.value}>{it.value}</p>
+    </template>
+</template>

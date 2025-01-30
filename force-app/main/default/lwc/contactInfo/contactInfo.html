@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Contact Information">
+        <template if:true={contact}>
+            <div class="slds-box slds-box_xx-small">
+                <p>First Name: {contact.FirstName}</p>
+                <p>Last Name: {contact.LastName}</p>
+                <p>Email: {contact.Email}</p>
+                <p>Phone: {contact.Phone}</p>
+            </div>
+        </template>
+    </lightning-card>
+</template>
