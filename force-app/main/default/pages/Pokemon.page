@@ -1,0 +1,22 @@
+<apex:page controller="PokemonController">
+    <apex:form>
+        <apex:pageBlock title="What's Your Favorite Pokémon?">
+
+            <apex:pageBlockSection>
+                <apex:inputText value="{!pokemonName}" label="Enter Pokémon Name" />
+                <apex:commandButton value="Set favorite pokemon" action="{!getPokemon}" reRender="resultBlock" />
+            </apex:pageBlockSection>
+
+
+            <apex:pageBlockSection id="resultBlock">
+                <apex:outputPanel rendered="{!NOT(ISNULL(pokemonImageUrl))}">
+                    <p>Pokémon: {!pokemonName}</p>
+                    <img src="{!pokemonImageUrl}" alt="Pokémon Image" style="width:200px; height:auto;" />
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!ISNULL(pokemonImageUrl)}">
+                    <p>No image found. Please check the Pokémon name and try again.</p>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Account List">
+        <h2>Create New Account</h2>
+        <lightning-record-edit-form 
+            object-api-name="Account"
+            onsuccess={handleAccountCreated}
+            onerror={handleError}>
+            <lightning-messages></lightning-messages>
+            <lightning-input-field field-name={accountName}></lightning-input-field>
+            <lightning-input-field field-name={accountRevenue}></lightning-input-field>
+            <lightning-button type="submit" label="Create Account" variant="brand"></lightning-button>
+        </lightning-record-edit-form>
+
+        <h2>Account List</h2>
+        <template lwc:if={accounts.data}>
+            <div class="slds-grid slds-wrap">
+                <template for:each={accounts.data} for:item="account">
+                    <div key={account.Id} class="slds-col slds-size_1-of-3 slds-var-p-around_small">
+                        <c-account-child-component 
+                            account={account} 
+                            ondelete={handleAccountDelete}>
+                        </c-account-child-component>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </lightning-card>
+</template>

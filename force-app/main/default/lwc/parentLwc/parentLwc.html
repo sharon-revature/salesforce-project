@@ -1,0 +1,9 @@
+<template>
+    <lightning-card title="Parent Component">
+        <lightning-button label="Toggle Child Component" onclick={handleToggleVisibility}> 
+        </lightning-button>
+        <template lwc:if={isChallenge1Visible}>
+            <c-challenge1></c-challenge1>
+        </template>
+    </lightning-card>
+</template>

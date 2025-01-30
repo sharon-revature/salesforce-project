@@ -1,0 +1,18 @@
+<template>
+    <div class="account-card">
+        <lightning-record-edit-form object-api-name="Account" record-id={account.Id} onsuccess={handleSuccess}>
+            <lightning-input-field field-name="Name"></lightning-input-field>
+            <lightning-input-field field-name="AnnualRevenue"></lightning-input-field>
+
+            <div class="slds-button-group">
+                <lightning-button type="submit" label="Save" variant="brand"></lightning-button>
+                <lightning-button 
+                    label="Delete" 
+                    variant="destructive" 
+                    onclick={handleDelete} 
+                    data-recordid={account.Id}>
+                </lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

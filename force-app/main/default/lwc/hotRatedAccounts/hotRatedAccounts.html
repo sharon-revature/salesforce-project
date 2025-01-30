@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="Hot Rated Accounts" icon-name="standard:account">
+        <div class="slds-var-p-around_medium">
+            <lightning-input label="Account Name" value={name} onchange={handleChange} data-field="name"></lightning-input>
+            <lightning-combobox 
+                label="Rating" 
+                options={ratingOptions} 
+                value={rating} 
+                onchange={handleChange} 
+                data-field="rating">
+            </lightning-combobox>
+            <lightning-input label="Industry" value={industry} onchange={handleChange} data-field="industry"></lightning-input>
+            <lightning-input type="number" label="Annual Revenue" value={annualRevenue} onchange={handleChange} data-field="revenue"></lightning-input>
+            <lightning-button label="Create Account" variant="brand" onclick={createAccount}></lightning-button>
+        </div>
+
+        <template lwc:if={accounts}>
+            <template lwc:if={accounts.length}>
+                <div class="slds-grid slds-wrap">
+                    <template for:each={accounts} for:item="account">
+                        <div key={account.Id} class="slds-col slds-size_1-of-2 slds-var-p-around_small">
+                            <lightning-card title={account.Name}>
+                                <p class="slds-var-p-horizontal_small">
+                                    <strong>Rating:</strong> {account.Rating}
+                                </p>
+                                <p class="slds-var-p-horizontal_small">
+                                    <strong>Industry:</strong> {account.Industry}
+                                </p>
+                                <p class="slds-var-p-horizontal_small">
+                                    <strong>Revenue:</strong> ${account.AnnualRevenue}
+                                </p>
+                            </lightning-card>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak slds-var-p-around_medium">No hot-rated accounts found.</p>
+            </template>
+        </template>
+
+        <template lwc:elseif={error}>
+            <p class="slds-text-color_error">Error fetching accounts!</p>
+        </template>
+    </lightning-card>
+</template>

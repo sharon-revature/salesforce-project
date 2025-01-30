@@ -1,0 +1,11 @@
+<template>
+    <template lwc:if={caseList.data}>
+        <lightning-datatable 
+        data={caseList} 
+        key-field="Id" 
+        columns={columns} 
+        hide-checkbox-column="true">
+        </lightning-datatable>
+    </template>
+    <c-case-form oncasecreate={handleNewCase}></c-case-form>
+</template>
