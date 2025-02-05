@@ -1,12 +1,22 @@
 <template>
-    <lightning-card title="Contact Information">
-        <template if:true={contact}>
-            <div class="slds-box slds-box_xx-small">
-                <p>First Name: {contact.FirstName}</p>
-                <p>Last Name: {contact.LastName}</p>
-                <p>Email: {contact.Email}</p>
-                <p>Phone: {contact.Phone}</p>
-            </div>
-        </template>
-    </lightning-card>
+  <lightning-card title="Contact Information">
+    <div class="slds-var-p-around_medium">
+      <template if:true={contact.data}>
+        <lightning-layout multiple-rows>
+          <lightning-layout-item size="12">
+            <p><strong>Name:</strong> {fullName}</p>
+          </lightning-layout-item>
+          <lightning-layout-item size="12">
+            <p><strong>Email:</strong> {email}</p>
+          </lightning-layout-item>
+          <lightning-layout-item size="12">
+            <p><strong>Phone:</strong> {phone}</p>
+          </lightning-layout-item>
+        </lightning-layout>
+      </template>
+      <template if:true={contact.error}>
+        <p class="slds-text-color_error">Error loading contact data.</p>
+      </template>
+    </div>
+  </lightning-card>
 </template>
