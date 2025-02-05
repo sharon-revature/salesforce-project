@@ -1,0 +1,16 @@
+<template>
+  <lightning-card title="JEST Challenge">
+    <div class="slds-var-m-around_medium">
+      <lightning-input
+        label="Enter Text"
+        onchange={handleInputChange}
+      ></lightning-input>
+      <lightning-button
+        label="Submit"
+        onclick={handleButtonClick}
+        class="slds-var-m-top_small"
+      ></lightning-button>
+      <p class="slds-var-m-top_small">{userInput}</p>
+    </div>
+  </lightning-card>
+</template>
