@@ -1,10 +1,10 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import searchContacts from '@salesforce/apex/contactHelper.searchContacts';
 
-export default class ContactSearch extends LightningElement {
-    searchTerm = '';        
-    @track contacts = [];  
-    error;
+export default class ContactInfoSearch extends LightningElement {
+    @api searchTerm = '';   // public for testing
+    @track contacts = [];   // still reactive - no need to expose to tests
+    @api error;             // public for testing
 
     handleSearchTermChange(event) {
         this.searchTerm = event.target.value;
